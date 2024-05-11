@@ -1,3 +1,4 @@
+
 #include "student.h"
 #include "string.h"
 #include "stdio.h"
@@ -43,5 +44,14 @@ void assign_student(struct student_t *_student, struct dorm_t *_dorm, char *id, 
     }
 }
 
-
-
+void move_student(struct student_t *_student, struct dorm_t *_dorm, struct dorm_t *old_dorm, char *id, char *dorm_name)
+{
+    if (_dorm->residents_num < _dorm->capacity)
+    {
+        if (_dorm->gender == _student->gender)
+        {   _student->dorm = _dorm;
+            old_dorm->residents_num--;
+            _dorm->residents_num++;
+        }
+    }
+}

@@ -23,5 +23,5 @@ void student_print_all(struct student_t *_student, unsigned short int _size);
 
 void assign_student(struct student_t *_students, struct dorm_t *_dorm, char *id, char *dorm_name);
 
-
+void move_student(struct student_t *_student, struct dorm_t *_dorm, struct dorm_t *old_dorm, char *id, char *dorm_name);
 #endif

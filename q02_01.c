@@ -1,5 +1,7 @@
+
 // 12S23042 - Pretty Maria 
 // 12S23043 - Grace Tiodora
+
 
 #include <stdio.h>
 #include "./libs/dorm.h"
@@ -19,16 +21,17 @@ int main(int _argc, char **_argv)
     char mhs_gender[8];
     unsigned short int ang_gender;
     
-    struct student_t *mhs = malloc(20 * sizeof(struct student_t));
-    struct dorm_t *dorms = malloc(20 * sizeof(struct dorm_t));
+
+    struct student_t *mhs = malloc(50 * sizeof(struct student_t));
+    struct dorm_t *dorms = malloc(50 * sizeof(struct dorm_t));
 
     unsigned short int stop = 0, i;
 
     unsigned short int size_mhs = 1, prt_std = 0;
     unsigned short int size_dorm = 1, prt_dorm = 0;
 
-    unsigned short int poin_drm, poin_std;    
-
+    unsigned short int poin_drm, poin_std;
+    
     while (stop != 1) {
         fgets(input, sizeof(input), stdin);
         input[strcspn(input,"\r\n")] = 0;
@@ -91,29 +94,68 @@ int main(int _argc, char **_argv)
             poin_std = 0;
             poin_drm = 0;
 
-            for (int i = 0; i < prt_std; i++)
+            for (int x = 0; x < prt_std; x++)
             {
-                if(strcmp(mhs[i].id, mhs_id)==0)
+                if(strcmp(mhs[x].id, mhs_id)==0)
                 {
-                    poin_std = i;
+                    poin_std = x;
                     break;
                 }
             }
-            for (int i = 0; i < prt_std; i++)
+            for (int x = 0; x < prt_std; x++)
             {
-                if(strcmp(dorms[i].name, mhs_name)==0)
+                if(strcmp(dorms[x].name, mhs_name)==0)
                 {
-                    poin_drm = i;
+                    poin_drm = x;
                     break;
                 }
             }
             void (*pf)(struct student_t *_student,struct dorm_t *_dorm, char *id, char *dorm_name) = NULL;
             pf = assign_student;
+        
             pf(&mhs[poin_std], &dorms[poin_drm], mhs_id, mhs_name);
 
-            
+        }else if(strcmp(command, "move-student")==0){
+            strcpy(mhs_id ,strtok(NULL, "#"));
+            strcpy(mhs_name, strtok(NULL, "#"));
+            poin_std = 0;
+            poin_drm = 0;
+            for (int x = 0; x < prt_std; x++){
+                if(strcmp(mhs[x].id, mhs_id)==0)
+                {
+                    poin_std = x;
+                    break;
+                }
+            }
 
-        }else if(strcmp(command, "---") == 0){
+            for (int x = 0; x < prt_dorm; x++){
+
+                if(strcmp(dorms[x].name, mhs_name)==0)
+                {
+                    poin_drm = x;
+                    break;
+                }
+            }
+            if (mhs[poin_std].dorm == NULL)
+            {
+                void (*pf)(struct student_t *_student,struct dorm_t *_dorm, char *id, char *dorm_name) = NULL;
+                pf = assign_student;
+                pf(&mhs[poin_std], &dorms[poin_drm], mhs_id, mhs_name);
+            }
+            else{
+                for (int x = 0; x < prt_dorm; x++)
+                {
+                    if(strcmp(mhs[poin_std].dorm->name, dorms[x].name)==0)
+                    {
+                        void (*pf)(struct student_t *_student, struct dorm_t *_dorm, struct dorm_t *old_dorm, char *id, char *dorm_name) = NULL;
+                        pf = move_student;
+                        pf(&mhs[poin_std], &dorms[poin_drm], &dorms[x], mhs_id, mhs_name);
+                        break;
+                    }
+                }
+            }
+        }
+        else if(strcmp(command, "---") == 0){
             stop = 1;
 
         }

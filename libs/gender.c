@@ -1,3 +1,4 @@
+
 #include "gender.h"
 #include "string.h"
 #include "stdlib.h"
@@ -9,4 +10,3 @@ char *gender_to_text (enum gender_t mhs_gender){
     else if(mhs_gender == 1) strcpy(data,"female");
     return data;
 }
-

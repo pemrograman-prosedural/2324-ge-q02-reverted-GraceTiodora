@@ -17,4 +17,3 @@ void print_all_dorm (struct dorm_t *dorms, unsigned short int size_dorm);
 void print_name_dorm (struct dorm_t *dorms, unsigned short int size_dorm);
 
 #endif
-
